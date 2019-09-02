@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/imageGuia"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/guia1" />
+
+
+    <ImageView
+        android:id="@+id/tipo"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:adjustViewBounds="true"
+        android:padding="4dp"
+        android:src="@drawable/reload" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical">
+
+
+        <com.kitchenina.app.view.TextViewBold
+            android:id="@+id/txName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Guia"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+
+        <com.kitchenina.app.view.TextViewRegular
+            android:id="@+id/txDescripcion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txName"
+            android:layout_marginTop="-2dp"
+            android:gravity="left"
+            android:text="Guia"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
