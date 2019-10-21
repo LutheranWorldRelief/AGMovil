@@ -13,9 +13,12 @@ import android.widget.Button
 import com.cacaomovil.app.R
 import com.cacaomovil.app.activities.WebView
 import kotlinx.android.synthetic.main.listado_otro.*
-
+import android.text.style.UnderlineSpan
+import android.text.SpannableString
+import android.widget.TextView
 
 class ListadoOtro : Fragment(), View.OnClickListener {
+
     internal var context: Activity? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,17 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         //tabLayout = context!!.findViewById(R.id.tab_layout) as TabLayout
 
         /**
-         * Abro el webview con el evento click
+         * Cuando doy clic en el titulo de Aula Virtual Cacaomovil, ingreso al enlace de la plataforma
+         */
+        val btnEnlaceAulaVirtual = enlaceAulaVirtual.findViewById<TextView>(R.id.enlaceAulaVirtual)
+        btnEnlaceAulaVirtual.setOnClickListener(View.OnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse("https://developer.brianpalma.com")
+            startActivity(i)
+        })
+
+        /**
+         * Abro el webview cuando preciono el botón de Acceso Web
          */
         val btnAbriWebView = abrirWebView.findViewById<Button>(R.id.abrirWebView)
         btnAbriWebView.setOnClickListener(View.OnClickListener {
@@ -48,12 +61,13 @@ class ListadoOtro : Fragment(), View.OnClickListener {
             startActivity(intent)
         })
 
+        /**
+         * Cuando preciono el boton de Acceso APP, verifico si la aplicación de Moodle se encuentra instalada
+         * Si no se encuentra instalada lo llevo al Google Play a buscar la aplicación
+         */
         val btnAbrirMoodle = abrirMoodle.findViewById<Button>(R.id.abrirMoodle)
         btnAbrirMoodle.setOnClickListener(View.OnClickListener {
-
-
             launchApp("com.moodle.moodlemobile")
-
         })
     }
 
@@ -64,20 +78,22 @@ class ListadoOtro : Fragment(), View.OnClickListener {
     }
 
     private fun launchApp(packageName: String) {
-        // Get an instance of PackageManager
+        // Instancia al PackageManager
         val pm = getContext()?.packageManager
 
-        // Initialize a new Intent
+        // Instancia a new Intent
         var intent:Intent? = pm?.getLaunchIntentForPackage(packageName)
 
-        // Add category to intent
+        // Agrego la categoría intent
         intent?.addCategory(Intent.CATEGORY_LAUNCHER)
 
-        // If intent is not null then launch the app
+        // Si es distinto a null inicio la aplicación
         if(intent!=null){
             getContext()?.startActivity(intent)
         }else{
-
+            /**
+             * De lo contrario voy al Google Play, a buscar la aplicación para instalarla
+             */
             intent = Intent(Intent.ACTION_VIEW);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));

@@ -8,46 +8,77 @@
     android:background="#fff">
 
     <TextView
+        android:id="@+id/enlaceAulaVirtual"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="86dp"
+        android:gravity="right"
+        android:text="@string/txtAulaVirtualCacaomovil"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="-371dp"
+        android:foreground="@drawable/banner_cacao"
+        app:srcCompat="@drawable/banner_cacao" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="249dp"
+        android:layout_height="203dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="20dp"
         android:lineSpacingExtra="8sp"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-" />
+        android:text="@string/txtTextoIntroduccion" />
 
     <Button
         android:id="@+id/abrirMoodle"
-        android:layout_width="wrap_content"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="222dp"
         android:background="#009688"
         android:outlineAmbientShadowColor="#009688"
-        android:text="Aula virtual en app de moodle"
+        android:text="@string/btnAccesoApp"
         android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/abrirWebView"
-        android:layout_width="wrap_content"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginStart="225dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="20dp"
         android:background="#009688"
         android:outlineAmbientShadowColor="#009688"
-        android:text="Aula virtual"
+        android:text="@string/btnAccesoWebView"
         android:textColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="123dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/logo_cacaomovil" />
+
 </RelativeLayout>

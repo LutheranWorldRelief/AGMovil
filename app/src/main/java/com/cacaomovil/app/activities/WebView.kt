@@ -15,7 +15,15 @@ import kotlinx.android.synthetic.main.activity_web_view.*
 
 class WebView : AppCompatActivity() {
 
+    /**
+     * URL que va a abrir el webview
+     */
     private val BASE_URL = "https://developer.brianpalma.com/";
+
+    /**
+     * User agent
+     */
+    val USER_AGENT = "Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +53,7 @@ class WebView : AppCompatActivity() {
 
             //this.finish()
         }
-/*
-        swipeRefresh.setOnRefreshListener {
-            webView.reload();
-        }
-*/
+
         webView.webViewClient = object : WebViewClient(){
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -58,18 +62,24 @@ class WebView : AppCompatActivity() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                //swipeRefresh.isRefreshing = true;
             }
 
         }
 
+        /**
+         * Configuraciones del webview
+         */
         val setting = webView.settings
+        setting.userAgentString = USER_AGENT
         setting.javaScriptEnabled = true
         setting.domStorageEnabled = true
         webView.loadUrl(BASE_URL)
 
     }
 
+    /**
+     * Función para regresar
+     */
     override fun onBackPressed() {
         if(webView.canGoBack()){
             webView.goBack()
