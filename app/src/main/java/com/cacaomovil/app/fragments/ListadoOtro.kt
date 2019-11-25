@@ -1,6 +1,7 @@
 package com.cacaomovil.app.fragments
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,11 +16,15 @@ import com.cacaomovil.app.activities.WebView
 import kotlinx.android.synthetic.main.listado_otro.*
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
+import android.view.Window
 import android.widget.TextView
+import android.widget.Toast
 
 class ListadoOtro : Fragment(), View.OnClickListener {
 
     internal var context: Activity? = null
+    internal lateinit var myDialog : Dialog
+    internal lateinit var txt : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,9 +43,32 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         context!!.finish()
     }
 
+    fun ShowDialog(){
+
+        myDialog = Dialog(context)
+        myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        myDialog.setContentView(R.layout.activity_dialog)
+        myDialog.setTitle("Aula virtual")
+
+        txt = myDialog.findViewById<View>(R.id.abrirMoodleDialog) as TextView
+        txt.isEnabled = true
+
+        txt.setOnClickListener{
+            Toast.makeText(context, "Abriendo la aplicación de Moodle", Toast.LENGTH_SHORT).show()
+            launchApp("com.moodle.moodlemobile")
+            myDialog.cancel()
+        }
+
+        myDialog.show()
+    }
+
     private fun inits() {
 
         //tabLayout = context!!.findViewById(R.id.tab_layout) as TabLayout
+        val btnAbrirModalMoodle = abrirModalMoodle.findViewById<TextView>(R.id.abrirModalMoodle)
+        btnAbrirModalMoodle.setOnClickListener(View.OnClickListener {
+            ShowDialog()
+        })
 
         /**
          * Cuando doy clic en el titulo de Aula Virtual Cacaomovil, ingreso al enlace de la plataforma
@@ -65,10 +93,14 @@ class ListadoOtro : Fragment(), View.OnClickListener {
          * Cuando preciono el boton de Acceso APP, verifico si la aplicación de Moodle se encuentra instalada
          * Si no se encuentra instalada lo llevo al Google Play a buscar la aplicación
          */
+        /*
         val btnAbrirMoodle = abrirMoodle.findViewById<Button>(R.id.abrirMoodle)
         btnAbrirMoodle.setOnClickListener(View.OnClickListener {
             launchApp("com.moodle.moodlemobile")
         })
+        */
+
+
     }
 
     override fun onClick(v: View) {
