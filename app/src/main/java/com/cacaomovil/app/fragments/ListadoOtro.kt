@@ -26,6 +26,11 @@ class ListadoOtro : Fragment(), View.OnClickListener {
     internal lateinit var myDialog : Dialog
     internal lateinit var txt : TextView
 
+    /**
+     * URL Moodle
+     */
+    private val urlMoodle = "https://developer.brianpalma.com/";
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -67,7 +72,8 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         //tabLayout = context!!.findViewById(R.id.tab_layout) as TabLayout
         val btnAbrirModalMoodle = abrirModalMoodle.findViewById<TextView>(R.id.abrirModalMoodle)
         btnAbrirModalMoodle.setOnClickListener(View.OnClickListener {
-            ShowDialog()
+            //ShowDialog()
+            launchApp("com.moodle.moodlemobile")
         })
 
         /**
@@ -76,7 +82,7 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         val btnEnlaceAulaVirtual = enlaceAulaVirtual.findViewById<TextView>(R.id.enlaceAulaVirtual)
         btnEnlaceAulaVirtual.setOnClickListener(View.OnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse("https://developer.brianpalma.com")
+            i.data = Uri.parse("moodlemobile://" + urlMoodle)
             startActivity(i)
         })
 
@@ -121,7 +127,12 @@ class ListadoOtro : Fragment(), View.OnClickListener {
 
         // Si es distinto a null inicio la aplicación
         if(intent!=null){
-            getContext()?.startActivity(intent)
+            //getContext()?.startActivity(intent)
+
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse("moodlemobile://" + urlMoodle)
+            startActivity(i)
+
         }else{
             /**
              * De lo contrario voy al Google Play, a buscar la aplicación para instalarla
