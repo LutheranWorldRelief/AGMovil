@@ -20,7 +20,7 @@
     <string name="txtTextoIntroduccion">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</string>
     <string name="btnAccesoApp">Acceso APP</string>
     <string name="btnAccesoWebView">Acceso WEB</string>
-    <string name="textoModalAccesoApp">Si es la primera vez que utiliza el app de moodle debe ingresar esta dirección: https://developer.brianpalma.com/</string>
+    <string name="textoModalAccesoApp">La primera vez que ingrese al aula virtual debe descargar el app de moodle y crear una cuenta con las opciones disponibles (correo electrónico, Facebook o Google)</string>
 
 
 </resources>

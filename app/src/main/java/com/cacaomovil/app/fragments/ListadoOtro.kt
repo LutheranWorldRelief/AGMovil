@@ -49,7 +49,6 @@ class ListadoOtro : Fragment(), View.OnClickListener {
     }
 
     fun ShowDialog(){
-
         myDialog = Dialog(context)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.activity_dialog)
@@ -59,11 +58,10 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         txt.isEnabled = true
 
         txt.setOnClickListener{
-            Toast.makeText(context, "Abriendo la aplicación de Moodle", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "Abriendo la aplicación de Moodle", Toast.LENGTH_SHORT).show()
             launchApp("com.moodle.moodlemobile")
             myDialog.cancel()
         }
-
         myDialog.show()
     }
 
@@ -72,8 +70,15 @@ class ListadoOtro : Fragment(), View.OnClickListener {
         //tabLayout = context!!.findViewById(R.id.tab_layout) as TabLayout
         val btnAbrirModalMoodle = abrirModalMoodle.findViewById<TextView>(R.id.abrirModalMoodle)
         btnAbrirModalMoodle.setOnClickListener(View.OnClickListener {
-            //ShowDialog()
-            launchApp("com.moodle.moodlemobile")
+
+            if(verificaAppInstalada("com.moodle.moodlemobile")){
+                //Si esta instalada la abro de una vez
+                launchApp("com.moodle.moodlemobile")
+            }else{
+                //Muestro el modal
+                ShowDialog()
+            }
+
         })
 
         /**
@@ -134,6 +139,7 @@ class ListadoOtro : Fragment(), View.OnClickListener {
             startActivity(i)
 
         }else{
+
             /**
              * De lo contrario voy al Google Play, a buscar la aplicación para instalarla
              */
@@ -142,6 +148,29 @@ class ListadoOtro : Fragment(), View.OnClickListener {
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
             startActivity(intent);
         }
+    }
+
+    private fun verificaAppInstalada(packageName: String) : Boolean {
+
+        val response:Boolean
+
+        // Instancia al PackageManager
+        val pm = getContext()?.packageManager
+
+        // Instancia a new Intent
+        var intent:Intent? = pm?.getLaunchIntentForPackage(packageName)
+
+        // Agrego la categoría intent
+        intent?.addCategory(Intent.CATEGORY_LAUNCHER)
+
+        // Si es distinto a null inicio la aplicación
+        if(intent!=null){
+            response = true
+        }else{
+            response =  false
+        }
+
+        return response
     }
 
 

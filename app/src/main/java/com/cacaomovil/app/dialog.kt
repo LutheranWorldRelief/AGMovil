@@ -15,5 +15,4 @@ class dialog : AppCompatActivity() {
         setContentView(R.layout.activity_dialog)
     }
 
-
 }
