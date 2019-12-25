@@ -42,7 +42,7 @@ class HomeOpciones : Fragment(), View.OnClickListener {
 
         tabLayout.addTab(tabLayout.newTab().setText("APPS"))
         tabLayout.addTab(tabLayout.newTab().setText("BIBLIOTECA"))
-        tabLayout.addTab(tabLayout.newTab().setText("OTRO"))
+        tabLayout.addTab(tabLayout.newTab().setText("AULA VIRTUAL"))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         val adapter = PagerOpciones(childFragmentManager, tabLayout.tabCount)
