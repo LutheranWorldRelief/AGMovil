@@ -5,4 +5,7 @@
     <color name="colorAccent">#000000</color>
     <color name="back_color">#ffffff</color>
     <color name="red_pink">#cb3429</color>
+    <color name="brown">#706F6F</color>
+    <color name="tabs">#ea7a48</color>
+
 </resources>

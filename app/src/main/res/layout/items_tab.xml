@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.kitchenina.app.view.TextViewRegular
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/text1"
@@ -7,6 +7,7 @@
     android:textSize="13sp"
     android:textColor="#fff"
     android:gravity="center"
+    android:fontFamily="@font/robotoregular"
     android:text="Hola"
     android:layout_height="match_parent"
     />

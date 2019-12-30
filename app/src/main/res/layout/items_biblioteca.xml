@@ -9,11 +9,25 @@
 
     <ImageView
         android:id="@+id/imageGuia"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
         android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/guia1" />
+
+
+    <ImageView
+        android:id="@+id/archivo"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="30dp"
+        android:adjustViewBounds="true"
+        android:padding="4dp"
+        android:visibility="gone" />
 
 
     <ImageView
@@ -29,24 +43,26 @@
 
 
     <RelativeLayout
+        android:id="@+id/rlCont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="60dp"
         android:orientation="vertical">
 
 
-        <com.kitchenina.app.view.TextViewBold
+        <TextView
             android:id="@+id/txName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Guia"
+            android:fontFamily="@font/robotobold"
             android:textColor="#000000"
             android:textSize="15sp" />
 
 
-        <com.kitchenina.app.view.TextViewRegular
+        <TextView
             android:id="@+id/txDescripcion"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -54,8 +70,10 @@
             android:layout_marginTop="-2dp"
             android:gravity="left"
             android:text="Guia"
+            android:fontFamily="@font/robotobold"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

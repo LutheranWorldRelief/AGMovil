@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/section_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:fontFamily="@font/robotobold"
+        android:paddingRight="16dp"
+        android:textColor="@color/colorPrimary"
+        android:singleLine="true"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:background="#787676"
+        android:layout_width="match_parent"
+        android:fontFamily="@font/robotobold"
+        android:layout_height="0.5dp"
+        android:id="@+id/linea"
+        />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:id="@+id/contApps"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerListApps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:clipToPadding="false"
+            android:descendantFocusability="blocksDescendants"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="2dp"
+        android:id="@+id/contDestacadas"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
+
+        <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/robotobold"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/back_color"
+            android:singleLine="true"
+            android:text="Destacadas"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerListAppsDestacadas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:clipToPadding="false"
+            android:descendantFocusability="blocksDescendants"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+</LinearLayout>

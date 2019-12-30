@@ -15,5 +15,20 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/logo_app" />
+        android:src="@drawable/cacao_movil_main" />
+
+
+    <TextView
+        android:id="@+id/txVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/robotobold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_marginBottom="6dp"
+        android:text=" " />
+
+
+
 </RelativeLayout>

@@ -5,36 +5,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:background="#fff">
 
-    <com.kitchenina.app.view.EditTextRegular
-        android:id="@+id/etBuscarBiblioteca"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:background="@android:drawable/dialog_holo_light_frame"
+        android:background="@android:color/transparent"
         android:ems="10"
-        android:textSize="14sp"
-        android:imeOptions="actionSearch"
+        android:visibility="gone"
         android:hint="Buscar ..."
+        android:imeOptions="actionSearch"
         android:inputType="textPersonName"
-        android:paddingBottom="16dp"
+        android:paddingBottom="6dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="16dp" />
+        android:paddingTop="6dp"
+        android:fontFamily="@font/robotoregular"
+        android:textSize="14sp" />
 
-    <com.kitchenina.app.view.TextViewBold
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/etBuscarBiblioteca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:iconifiedByDefault="false"
+        android:paddingBottom="6dp"
+        android:paddingRight="16dp"
+        android:paddingTop="6dp"
+        android:queryHint="Buscar ..."
+        app:theme="@style/AppSearchView"
+        app:iconifiedByDefault="false"
+        app:queryHint="Buscar ..." />
+
+    <TextView
+        android:id="@+id/txLines"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="23dp"
+        android:fontFamily="@font/robotobold"
+        android:layout_marginTop="57dp"
+        android:background="#c2c1c1"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
+
+
+    <TextView
         android:id="@+id/txGuias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etBuscarBiblioteca"
+        android:layout_below="@+id/txLines"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="GUÍAS DE GÉNERO"
+        android:text="TEMÁTICA"
+        android:fontFamily="@font/robotobold"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary" />
 
