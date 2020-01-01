@@ -1,27 +1,23 @@
 package kronos.cacaomovil.adapter
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import android.content.Context
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kronos.cacaomovil.R
-import kronos.cacaomovil.models.BibliotecaM
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
-import android.R.attr.button
-import android.support.v4.content.ContextCompat.startActivity
-import android.content.Intent
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.widget.*
-import kronos.cacaomovil.activities.ListadoGuias
+import kronos.cacaomovil.R
+import kronos.cacaomovil.fragments.ListadoApps
 import kronos.cacaomovil.models.AppsM
 import kronos.cacaomovil.models.CategoriasM
-import java.util.ArrayList
+import java.util.*
 
 
 class AdapterAppsList(private val mContext: Activity, private val listCategories: MutableList<CategoriasM>) : RecyclerView.Adapter<AdapterAppsList.MyViewHolder>() {
@@ -35,6 +31,8 @@ class AdapterAppsList(private val mContext: Activity, private val listCategories
         lateinit var recyclerListAppsDestacadas: RecyclerView
         lateinit var contDestacadas: LinearLayout
         lateinit var contApps: LinearLayout
+        lateinit var arrow: ImageView
+        lateinit var contEncabezado: RelativeLayout
 
 
         lateinit var adapterApps: SimpleAdapter
@@ -49,6 +47,8 @@ class AdapterAppsList(private val mContext: Activity, private val listCategories
             contDestacadas = view.findViewById(R.id.contDestacadas) as LinearLayout
             contApps= view.findViewById(R.id.contApps) as LinearLayout
             recyclerListApps = view.findViewById(R.id.recyclerListApps) as RecyclerView
+            arrow = view.findViewById(R.id.arrow) as ImageView
+            contEncabezado = view.findViewById(R.id.contEncabezado) as RelativeLayout
 
             recyclerListApps.setNestedScrollingEnabled(false)
             recyclerListApps.setHasFixedSize(true);
@@ -78,7 +78,7 @@ class AdapterAppsList(private val mContext: Activity, private val listCategories
         if(categories.nombre.toString().equals("Destacadas")){
             holder.section_text!!.setText("")
             holder.linea!!.visibility = View.GONE
-            holder.section_text!!.visibility = View.GONE
+            holder.contEncabezado!!.visibility = View.GONE
         }else{
             holder.section_text!!.setText(categories.nombre)
             holder.linea!!.visibility = View.VISIBLE
@@ -121,6 +121,65 @@ class AdapterAppsList(private val mContext: Activity, private val listCategories
         holder.recyclerListAppsDestacadas.setAdapter(holder.adapterAppsDestacadas)
         holder.adapterAppsDestacadas.notifyDataSetChanged()
 
+
+
+        if(categories.visible){
+            Picasso.get()
+                    .load(R.drawable.arrow_up)
+                    .resize(100, 100)
+                    .into(holder.arrow)
+
+            holder.recyclerListApps.setVisibility(View.VISIBLE)
+
+        }else{
+            Picasso.get()
+                    .load(R.drawable.arrow_bottom)
+                    .resize(100, 100)
+                    .into(holder.arrow)
+
+            holder.recyclerListApps.setVisibility(View.GONE)
+        }
+
+        holder.contEncabezado!!.setOnClickListener {
+            var posicionActual = position
+            if(categories.visible){
+                Picasso.get()
+                        .load(R.drawable.arrow_bottom)
+                        .resize(100, 100)
+                        .into(holder.arrow)
+
+
+                categories.visible = false
+                holder.recyclerListApps.animate()
+                        .translationY(0F)
+                        .alpha(0.0f)
+                        .setListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                super.onAnimationEnd(animation)
+                                holder.recyclerListApps.setVisibility(View.GONE)
+                            }
+                        })
+            }else{
+                categories.visible = true
+                Picasso.get()
+                        .load(R.drawable.arrow_up)
+                        .resize(100, 100)
+                        .into(holder.arrow)
+                holder.recyclerListApps.setVisibility(View.VISIBLE)
+                holder.recyclerListApps.animate()
+                        .translationY(0F)
+                        .alpha(1.0f)
+                        .setListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                super.onAnimationEnd(animation)
+                                //ListadoApps.layoutManager.scrollToPositionWithOffset(1000, 0)
+                                System.out.println("terminooo")
+                                ListadoApps.recyclerApps.smoothScrollToPosition(posicionActual)
+                            }
+                        })
+            }
+
+        }
     }
 
     override fun getItemCount(): Int {

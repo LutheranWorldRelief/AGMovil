@@ -40,7 +40,6 @@ class AdapterBiblioteca(private val mContext: Activity, private val listCategori
                 var charSearch = constraint.toString().trim()
                 charSearch = Constants.remove(charSearch)
 
-                System.out.println("charSearch "+charSearch+"...")
 
                 if (charSearch.isEmpty()){
 

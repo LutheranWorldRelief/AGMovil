@@ -51,8 +51,12 @@ class ListadoApps : Fragment(), View.OnClickListener, AdapterCategorias.ItemClic
     internal lateinit var adapter_apps: SimpleAdapter
     lateinit var dialog: ACProgressFlower
 
-    lateinit var layoutManager: LinearLayoutManager
-    lateinit var recyclerApps: RecyclerView
+    companion object {
+        lateinit var layoutManager: LinearLayoutManager
+        lateinit var recyclerApps: RecyclerView
+
+    }
+
 
     lateinit var swipeRefreshLayoutApp: SwipeRefreshLayout
     internal var listCategorias: MutableList<CategoriasM> = ArrayList<CategoriasM>()
@@ -127,7 +131,7 @@ class ListadoApps : Fragment(), View.OnClickListener, AdapterCategorias.ItemClic
             rellenarDatos("upload",listCategoriasTop.get(position).nombre,false)
         }
 
-        System.out.println(posicionActual)
+        //System.out.println(posicionActual)
 
         listCategoriasTop.get(posicionActual).seleccionado = false
         listCategoriasTop.get(position).seleccionado = true
@@ -261,8 +265,12 @@ class ListadoApps : Fragment(), View.OnClickListener, AdapterCategorias.ItemClic
 
                             }
 
+                            var open = true
+                            if(value.toString().equals("")){
+                                open = false
+                            }
 
-                            listCategorias.add(CategoriasM(itemsCategoria.getString("id"),itemsCategoria.getString("name"),false,itemsCategoria.getString("icon"),apps,appsDestacadasRelleno))
+                            listCategorias.add(CategoriasM(itemsCategoria.getString("id"),itemsCategoria.getString("name"),false,itemsCategoria.getString("icon"),apps,appsDestacadasRelleno,open))
 
                         }
                     }
@@ -352,17 +360,17 @@ class ListadoApps : Fragment(), View.OnClickListener, AdapterCategorias.ItemClic
                 var appsRelleno: MutableList<AppsM> = ArrayList<AppsM>()
                 listCategorias.add(0,CategoriasM("","Destacadas",false,"",appsRelleno,appsDestacadas))
             }
-     }
+        }
 
 
 
 
-     adapterApps = AdapterAppsList(context!!, listCategorias)
-     recyclerApps.setAdapter(adapterApps)
-     adapterApps.notifyDataSetChanged()
-     adapter.notifyDataSetChanged()
+        adapterApps = AdapterAppsList(context!!, listCategorias)
+        recyclerApps.setAdapter(adapterApps)
+        adapterApps.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
 
- }
+    }
 
  override fun onClick(v: View) {
      when (v.id) {

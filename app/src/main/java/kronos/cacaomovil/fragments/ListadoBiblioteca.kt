@@ -1,6 +1,8 @@
 package kronos.cacaomovil.fragments
 
 import android.app.Activity
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -26,11 +28,13 @@ import android.widget.Toast
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.*
 import android.content.Intent
+import android.content.SharedPreferences
 import android.icu.text.Normalizer
 import android.os.Handler
 import android.support.v4.os.HandlerCompat.postDelayed
-
-
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
 
 
 class ListadoBiblioteca : Fragment(), View.OnClickListener {
@@ -42,6 +46,7 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
     lateinit var dialogBiblioteca: ACProgressFlower
     lateinit var CategoriasData: CategoriasDB
     var palabraBuscar:String = ""
+    private lateinit var Session: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -107,8 +112,11 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
             }
         })
 
-
-
+        Session = context!!.getSharedPreferences("datosAG", Context.MODE_PRIVATE)
+        if(Session!!.getBoolean("mostrarShow",true)){
+            Session!!.edit().putBoolean("mostrarShow",false).commit()
+            ShowDialogB()
+        }
 
     }
 
@@ -205,5 +213,21 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
         when (v.id) {
 
         }
+    }
+
+    fun ShowDialogB(){
+        var myDialog = Dialog(context)
+        myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        myDialog.setContentView(R.layout.activity_dialog)
+
+        var textView = myDialog.findViewById<View>(R.id.textView) as TextView
+        textView.text = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde"
+
+        var abrirMoodleDialog= myDialog.findViewById<View>(R.id.abrirMoodleDialog) as Button
+        abrirMoodleDialog.setText("Aceptar")
+        abrirMoodleDialog.setOnClickListener{
+            myDialog.cancel()
+        }
+        myDialog.show()
     }
 }

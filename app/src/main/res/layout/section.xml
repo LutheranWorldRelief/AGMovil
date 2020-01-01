@@ -7,20 +7,41 @@
     android:paddingBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/section_text"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:fontFamily="@font/robotobold"
-        android:paddingRight="16dp"
-        android:textColor="@color/colorPrimary"
-        android:singleLine="true"
-        android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:id="@+id/contEncabezado"
+        android:clickable="true"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/section_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/arrow"
+            android:fontFamily="@font/robotobold"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_bottom" />
+
+    </RelativeLayout>
+
 
 
     <TextView
@@ -32,7 +53,7 @@
         />
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -46,11 +67,12 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerListApps"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:clipToPadding="false"
             android:descendantFocusability="blocksDescendants"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:visibility="gone" />
 
     </LinearLayout>
 
