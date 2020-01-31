@@ -12,16 +12,70 @@
         >
 
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/icons_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="13dp"
+                app:srcCompat="@drawable/icons_left" />
+
+
+            <RelativeLayout
+                android:id="@+id/contShare"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="3dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:adjustViewBounds="true"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/share" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/robotoregular"
+                    android:gravity="center"
+                    android:text="Compartir"
+                    android:textColor="@android:color/white"
+                    android:textSize="13.5sp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
-            android:contentInsetEnd="0dp"
-            android:contentInsetLeft="0dp"
-            android:contentInsetRight="0dp"
             android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
+            android:visibility="gone"
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
@@ -34,17 +88,16 @@
                 android:layout_height="match_parent">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/app_name"
                     android:fontFamily="@font/robotobold"
-                    android:textSize="18sp"
                     android:paddingRight="80dp"
-                    android:textColor="@android:color/white" />
+                    android:text=" "
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
 
 
             </RelativeLayout>
@@ -83,6 +136,24 @@
 
             </WebView>
 
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="45dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/menu"
+                app:borderWidth="0dp" />
+
+
+
+
         </RelativeLayout>
 
 
@@ -96,6 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         android:background="#f7f7f7"
+        android:checkableBehavior="single"
         >
 
 

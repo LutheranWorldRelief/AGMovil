@@ -32,6 +32,7 @@ import android.content.SharedPreferences
 import android.icu.text.Normalizer
 import android.os.Handler
 import android.support.v4.os.HandlerCompat.postDelayed
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
@@ -47,6 +48,7 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
     lateinit var CategoriasData: CategoriasDB
     var palabraBuscar:String = ""
     private lateinit var Session: SharedPreferences
+    internal var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,6 +72,12 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
 
         adapter = AdapterBiblioteca(this!!.context!!, listBiblioteca as ArrayList<BibliotecaM>)
         layoutManager = LinearLayoutManager(context)
+        swipeRefreshLayout  = context!!.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
+        swipeRefreshLayout!!.setOnRefreshListener {
+            loadCategorias(false)
+
+        }
+
         recyclerBiblioteca = context!!.findViewById(R.id.recyclerBiblioteca) as RecyclerView
 
         recyclerBiblioteca.layoutManager = layoutManager
@@ -144,7 +152,11 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
 
                     cargarDataCategorias(response)
 
-                    dialogBiblioteca.dismiss()
+                    if(load==true){
+                        dialogBiblioteca.dismiss()
+                    }else{
+                        swipeRefreshLayout!!.isRefreshing = false
+                    }
                     System.out.println("response "+response)
 
                 }, Response.ErrorListener { error ->
@@ -152,11 +164,11 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
 
                     VolleyLog.d(Constants.TAG, "Error: " + error.message)
 
-            if(load==true){
-                dialogBiblioteca.dismiss()
-            }else{
-                //swipeRefreshLayoutApp.isRefreshing = false
-            }
+                if(load==true){
+                    dialogBiblioteca.dismiss()
+                }else{
+                    swipeRefreshLayout!!.isRefreshing = false
+                }
         }
         ) {
         }
@@ -169,6 +181,9 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
 
 
     fun cargarDataCategorias(response: String) {
+
+        listBiblioteca.clear()
+
         if(response.toString().equals("")){
             val cProd = CategoriasData.getCategorias()
             if (cProd.moveToFirst())
@@ -221,7 +236,7 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
         myDialog.setContentView(R.layout.activity_dialog)
 
         var textView = myDialog.findViewById<View>(R.id.textView) as TextView
-        textView.text = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde"
+        textView.text = "Puedes tener acceso al contenido que ya hayas leido de la biblioteca, incluso cuando no tengas conexión a internet. Para acceder a nuevo contenido, recuerda conectarte a internet"
 
         var abrirMoodleDialog= myDialog.findViewById<View>(R.id.abrirMoodleDialog) as Button
         abrirMoodleDialog.setText("Aceptar")

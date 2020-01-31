@@ -79,10 +79,10 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val itemsGuias = listDishes[position]
 
-        Picasso.get()
+        /*Picasso.get()
                 .load(itemsGuias.image)
                 .resize(120, 165)
-                .into(holder.imageGuia);
+                .into(holder.imageGuia);*/
 
         if(itemsGuias.descargado==true){
             Picasso.get()
@@ -192,11 +192,13 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
 
         holder.tipo!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                var mensaje = "Estas a punto de descargar esta guía en ePub o PDF para poder compartirla con tus amigos, esto puede ocupar espacio en tu celular\n" +
+                var mensaje = "Estas a punto de descargar esta guía en ePub o PDF, esto podría ocupar espacio en tu celular. \n" +
+                        "Si deseas leer la guía en línea, solamente haz click en el título\n" +
                         "\n" +
                         "¿Deseas continuar?"
                 if(itemsGuias.descargado==true){
-                    mensaje = "Estas a punto de actualizar esta guía en ePub o PDF para poder compartirla con tus amigos, esto puede ocupar espacio en tu celular\n" +
+                    mensaje = "Estas a punto de actualizar esta guía en ePub o PDF, esto podría ocupar espacio en tu celular. \n" +
+                            "Si deseas leer la guía en línea, solamente haz click en el título\n" +
                             "\n" +
                             "¿Deseas continuar?"
                 }

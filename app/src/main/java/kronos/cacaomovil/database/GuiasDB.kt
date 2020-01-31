@@ -61,7 +61,7 @@ class GuiasDB(context: Context) {
 
     fun getGuiasByCategoria(idCategoria:String): Cursor {
         val param = arrayOf<String>(idCategoria)
-        return db.rawQuery("SELECT * FROM $TABLE_NAME where $categoria=?", param)
+        return db.rawQuery("SELECT * FROM $TABLE_NAME where $categoria=? ORDER BY $idWeb ASC", param)
     }
 
 

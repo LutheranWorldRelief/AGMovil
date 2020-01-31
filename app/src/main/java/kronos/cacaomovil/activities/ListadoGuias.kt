@@ -21,10 +21,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.*
 import android.view.View
 import android.view.Window
 import android.webkit.MimeTypeMap
@@ -102,7 +99,7 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
             name = extras.getString("name")
         }
 
-        System.out.println("id "+id)
+        //System.out.println("id "+id)
 
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -120,6 +117,7 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
         adapter = AdapterGuias(context!!, listGuias)
         layoutManager = LinearLayoutManager(context)
         recyclerGuias = context!!.findViewById(R.id.recyclerGuias) as RecyclerView
+        recyclerGuias.addItemDecoration(DividerItemDecoration(recyclerGuias.getContext(), DividerItemDecoration.VERTICAL));
 
         recyclerGuias.layoutManager = layoutManager
         recyclerGuias.itemAnimator = DefaultItemAnimator()

@@ -176,13 +176,13 @@ class ListadoApps : Fragment(), View.OnClickListener, AdapterCategorias.ItemClic
 
                     rellenarDatos("reset", "",true)
 
-            VolleyLog.d(Constants.TAG, "Error: " + error.message)
-            if(load==true){
-                dialog.dismiss()
-            }else{
-                swipeRefreshLayoutApp.isRefreshing = false
-            }
-        }
+                    VolleyLog.d(Constants.TAG, "Error: " + error.message)
+                    if(load==true){
+                        dialog.dismiss()
+                    }else{
+                        swipeRefreshLayoutApp.isRefreshing = false
+                    }
+                }
         ) {
         }
 

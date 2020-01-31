@@ -106,7 +106,6 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
     private fun guardarGuia() {
         val urlCall = String.format(Constants.GUIA_COMPLETA, id)
-        System.out.println("terminooo " + urlCall)
 
         var requestQueue = Volley.newRequestQueue(context)
 
@@ -116,7 +115,7 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
                 Response.Listener { response ->
 
                     val res = JSONObject(response)
-                    System.out.println("terminooo " + res)
+                    //System.out.println("terminooo " + res)
                     var GuiasData = GuiasDB(context)
                     var SesionesData = SesionesDB(context)
                     var ArticulosData = ArticulosDB(context)
@@ -141,8 +140,9 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
                                     val articles = itemsS.getJSONArray("articles")
                                     for(k in 0..articles.length()-1) {
                                         val itemsA = articles.getJSONObject(k)
+                                        //System.out.println("itemsA $itemsA")
                                         ArticulosData.eliminar(itemsA.getString("id"))
-                                        ArticulosData.insertar(itemsA.getString("id"),itemsA.getString("name"),itemsA.getString("title"),itemsA.getString("description"),itemsA.getString("content"),id)
+                                        ArticulosData.insertar(itemsA.getString("id"),itemsA.getString("name"),itemsA.getString("title"),itemsA.getString("description"),itemsA.getString("content"),itemsS.getString("id"))
                                     }
                                 }
 
@@ -154,10 +154,10 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
                 }, Response.ErrorListener { error ->
 
-            VolleyLog.d(Constants.TAG, "Error: " + error.message)
+                    //VolleyLog.d("aqui es el error", "Error: " + error)
+                    //System.out.println("aqui es el errro ${error.message}")
 
-
-        }
+                }
         ) {
         }
 
@@ -179,7 +179,7 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
         var requestQueue = Volley.newRequestQueue(context)
 
-        System.out.println("Constants "+Constants.SECTIONS+id)
+        //System.out.println("Constants "+Constants.SECTIONS+id)
 
         val jsonObjRequestHome = object : StringRequest(
                 Request.Method.GET,
