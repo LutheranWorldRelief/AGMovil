@@ -15,13 +15,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.StrictMode
-import android.support.design.widget.NavigationView
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
 import android.view.View
 import android.view.Window
 import android.webkit.MimeTypeMap
@@ -30,6 +23,12 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.android.volley.Request
@@ -281,7 +280,12 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
                     formato = separated[separated.size-1];
                 }
 
-                listGuias.add(GuiasM(itemsGuias.getString("id"), itemsGuias.getString("name"), itemsGuias.getString("image"),descargado,id,formato))
+                var archive = false
+                if(itemsGuias.has("archive")){
+                    archive = itemsGuias.getBoolean("archive")
+                }
+
+                listGuias.add(GuiasM(itemsGuias.getString("id"), itemsGuias.getString("name"), itemsGuias.getString("image"),descargado,id,formato,itemsGuias.getInt("order"),archive))
             }
         }else{
             val cGuias = GuiasData.getGuiasByCategoria(id)
@@ -292,6 +296,8 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
                     val idGuia = cGuias.getString(cGuias.getColumnIndex(GuiasDB.idWeb))
                     val name = cGuias.getString(cGuias.getColumnIndex(GuiasDB.name))
                     val image = cGuias.getString(cGuias.getColumnIndex(GuiasDB.image))
+                    val order = cGuias.getString(cGuias.getColumnIndex(GuiasDB.order))
+                    val archive = cGuias.getString(cGuias.getColumnIndex(GuiasDB.archive))
 
                     val obtenerRegistro = ArchivosData.getArchivoByGuia(idGuia)
                     var descargado = false
@@ -311,7 +317,8 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
                         formato = separated[separated.size-1];
                     }
 
-                    listGuias.add(GuiasM(idGuia, name, image,descargado,id,formato))
+
+                    listGuias.add(GuiasM(idGuia, name, image,descargado,id,formato,order.toInt(),archive.toBoolean()))
 
 
                 } while (cGuias.moveToNext())

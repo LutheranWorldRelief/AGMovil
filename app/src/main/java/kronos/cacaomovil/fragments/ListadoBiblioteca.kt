@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,17 +24,21 @@ import kronos.cacaomovil.models.BibliotecaM
 import org.json.JSONObject
 import java.util.ArrayList
 import android.widget.Toast
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.*
 import android.content.Intent
 import android.content.SharedPreferences
 import android.icu.text.Normalizer
 import android.os.Handler
-import android.support.v4.os.HandlerCompat.postDelayed
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Window
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 class ListadoBiblioteca : Fragment(), View.OnClickListener {
@@ -122,7 +125,6 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
 
         Session = context!!.getSharedPreferences("datosAG", Context.MODE_PRIVATE)
         if(Session!!.getBoolean("mostrarShow",true)){
-            Session!!.edit().putBoolean("mostrarShow",false).commit()
             ShowDialogB()
         }
 
@@ -233,16 +235,22 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
     fun ShowDialogB(){
         var myDialog = Dialog(context)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        myDialog.setContentView(R.layout.activity_dialog)
+        myDialog.setContentView(R.layout.activity_biblioteca_dialog)
 
         var textView = myDialog.findViewById<View>(R.id.textView) as TextView
         textView.text = "Puedes tener acceso al contenido que ya hayas leido de la biblioteca, incluso cuando no tengas conexión a internet. Para acceder a nuevo contenido, recuerda conectarte a internet"
 
+        var check = myDialog.findViewById<View>(R.id.checkBox) as CheckBox
+
         var abrirMoodleDialog= myDialog.findViewById<View>(R.id.abrirMoodleDialog) as Button
         abrirMoodleDialog.setText("Aceptar")
         abrirMoodleDialog.setOnClickListener{
+            if(check.isChecked){
+                Session!!.edit().putBoolean("mostrarShow",false).commit()
+            }
             myDialog.cancel()
         }
+
         myDialog.show()
     }
 }

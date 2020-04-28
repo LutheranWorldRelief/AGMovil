@@ -4,11 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import kronos.cacaomovil.R
@@ -31,6 +26,11 @@ import kronos.cacaomovil.models.SesionesM
 import org.json.JSONObject
 import java.util.ArrayList
 import android.webkit.WebView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.articulos.*
 import kronos.cacaomovil.database.ArticulosDB
 import kronos.cacaomovil.database.GuiasDB
@@ -44,13 +44,14 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
     private var drawerLayout: DrawerLayout? = null
     internal lateinit var context: Activity
     internal var id:String = ""
-    lateinit var navigationView:NavigationView
+    lateinit var navigationView: NavigationView
     lateinit var dialog: ACProgressFlower
     internal var listArticles: MutableList<ArticlesM> = ArrayList<ArticlesM>()
     private var txTitle: TextView? = null
     var mWebView: WebView? = null
     lateinit var ArticulosData: ArticulosDB
     var linkShare = ""
+    var escala = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -159,6 +160,12 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
 
         loadArticulos()
         contShare.setOnClickListener(this)
+        //share.setColorFilter(Color.parseColor("#B2BB1E"), android.graphics.PorterDuff.Mode.MULTIPLY)
+        webMenos.setOnClickListener(this)
+        webMas.setOnClickListener(this)
+        escala = 0
+
+
     }
 
 
@@ -284,6 +291,16 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
                 i.putExtra(Intent.EXTRA_SUBJECT, "Cacao Móvil");
                 i.putExtra(Intent.EXTRA_TEXT, linkShare);
                 startActivity(Intent.createChooser(i, "Compartir"));
+            }
+            R.id.webMas ->{
+                escala++
+                mWebView!!.setInitialScale(escala)
+            }
+            R.id.webMenos ->{
+                if(escala != 0){
+                    escala--
+                }
+                mWebView!!.setInitialScale(escala)
             }
         }
     }

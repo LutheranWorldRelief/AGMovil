@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "740504801275",
+    "firebase_url": "https://cacao-movil.firebaseio.com",
+    "project_id": "cacao-movil",
+    "storage_bucket": "cacao-movil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740504801275:android:2698d9b3946ff9ad75455e",
+        "android_client_info": {
+          "package_name": "kronos.cacaomovil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "740504801275-a8h0dudk2q6oc98v2almaunprec0tmkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUoV9YirDvQrE2Db_OCYROLCKImC7Qbdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "740504801275-a8h0dudk2q6oc98v2almaunprec0tmkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740504801275:android:8dfce23f1453760975455e",
+        "android_client_info": {
+          "package_name": "kronos.cacaomovil.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "740504801275-a8h0dudk2q6oc98v2almaunprec0tmkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUoV9YirDvQrE2Db_OCYROLCKImC7Qbdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "740504801275-a8h0dudk2q6oc98v2almaunprec0tmkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

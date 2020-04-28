@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import kronos.cacaomovil.activities.ListadoSesiones
 import kronos.cacaomovil.models.GuiasM
 import com.squareup.picasso.Picasso
 import android.content.DialogInterface
-import android.os.Build
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.net.Uri
@@ -27,25 +25,15 @@ import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kronos.cacaomovil.Constants
-import android.os.AsyncTask
 import android.os.Environment
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.FileProvider
 import android.widget.Toast
-import co.metalab.asyncawait.async
+import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.RecyclerView
 import kronos.cacaomovil.common.DescargarArchivos
 import kronos.cacaomovil.database.*
-import kronos.cacaomovil.models.SesionesM
-import org.json.JSONArray
 import org.json.JSONObject
-import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.EasyPermissions.hasPermissions
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
 
 
 class AdapterGuias(private val mContext: Activity, private val listDishes: List<GuiasM>) : RecyclerView.Adapter<AdapterGuias.MyViewHolder>() {
@@ -53,13 +41,13 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var txName: TextView
         var txDescripcion: TextView? = null
-        var imageGuia: ImageView? = null
+        var txOrder: TextView? = null
         var archivo: ImageView? = null
         var tipo: ImageView?=null
         var rlCont: RelativeLayout?=null
 
         init {
-            imageGuia = view.findViewById(R.id.imageGuia) as ImageView
+            txOrder = view.findViewById(R.id.txOrder) as TextView
             archivo = view.findViewById(R.id.archivo) as ImageView
             txName = view.findViewById(R.id.txName) as TextView
             txDescripcion = view.findViewById(R.id.txDescripcion) as TextView
@@ -79,34 +67,42 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val itemsGuias = listDishes[position]
 
+        holder.txOrder!!.setText("${itemsGuias.order}")
         /*Picasso.get()
                 .load(itemsGuias.image)
                 .resize(120, 165)
                 .into(holder.imageGuia);*/
 
-        if(itemsGuias.descargado==true){
-            Picasso.get()
-                    .load(R.drawable.reload)
-                    .into(holder.tipo)
-
-            holder.archivo!!.visibility = View.VISIBLE
-
-            if(itemsGuias.formato.toLowerCase().toString().equals("pdf")){
-                Picasso.get()
-                        .load(R.drawable.pdf)
-                        .into(holder.archivo)
-            }else if(itemsGuias.formato.toLowerCase().toString().equals("")){
-                Picasso.get()
-                        .load(R.drawable.epub)
-                        .into(holder.archivo)
-            }
-        }else{
-            Picasso.get()
-                    .load(R.drawable.cloud_computing)
-                    .into(holder.tipo)
-
+        if(itemsGuias.archive == false){
             holder.archivo!!.visibility = View.GONE
+            holder.tipo!!.visibility = View.GONE
+
+        }else{
+            if(itemsGuias.descargado==true){
+                Picasso.get()
+                        .load(R.drawable.reload)
+                        .into(holder.tipo)
+
+                holder.archivo!!.visibility = View.VISIBLE
+
+                if(itemsGuias.formato.toLowerCase().toString().equals("pdf")){
+                    Picasso.get()
+                            .load(R.drawable.pdf)
+                            .into(holder.archivo)
+                }else if(itemsGuias.formato.toLowerCase().toString().equals("")){
+                    Picasso.get()
+                            .load(R.drawable.epub)
+                            .into(holder.archivo)
+                }
+            }else{
+                Picasso.get()
+                        .load(R.drawable.cloud_computing)
+                        .into(holder.tipo)
+
+                holder.archivo!!.visibility = View.GONE
+            }
         }
+
 
         holder.txName!!.setText(itemsGuias.name);
 
@@ -122,7 +118,7 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
             }
         })
 
-        holder.imageGuia!!.setOnClickListener(object : View.OnClickListener {
+        holder.txOrder!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val i = Intent(mContext, ListadoSesiones::class.java)
                 i.putExtra("id", itemsGuias.id)

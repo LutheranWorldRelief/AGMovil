@@ -22,26 +22,40 @@
         android:textStyle="bold" />
 
     <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="123dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/logo_cacaomovil" />
+
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="191dp"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="-408dp"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
         android:foreground="@drawable/banner_cacao"
         app:srcCompat="@drawable/banner_cacao" />
+
+
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="203dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:lineSpacingExtra="8sp"
-        android:text="@string/txtTextoIntroduccion" />
+        android:textSize="13sp"
+        android:lineSpacingExtra="5sp"
+        android:text="El aula virtual de Cacao Movil pretende brindar a nuestros usuarios(as) y muy especialmente al sector de productores, promotores y técnicos(as) de campo, una opción digital, dinamica e interactiva para poner a prueba sus conocimientos sobre el cultivo.
+\n\nQueremos poner a su disposición una serie de cursos, avalados por importantes instituciones de educación e investigación que han trabajado por mucho tiempo con el cultivo de cacao." />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -84,12 +98,6 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="123dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/logo_cacaomovil" />
+
 
 </RelativeLayout>

@@ -1,23 +1,13 @@
 package kronos.cacaomovil.activities
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.navigation.NavigationView
 import kronos.cacaomovil.R
 import kronos.cacaomovil.fragments.HomeOpciones
-import android.graphics.Color.DKGRAY
-import cc.cloudist.acplibrary.ACProgressConstant
-import cc.cloudist.acplibrary.ACProgressFlower
-
-
-
 
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {

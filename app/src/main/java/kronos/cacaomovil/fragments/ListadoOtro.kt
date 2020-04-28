@@ -4,17 +4,15 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import kotlinx.android.synthetic.main.listado_otro.*
-import android.text.style.UnderlineSpan
-import android.text.SpannableString
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.listado_otro.*
 import kronos.cacaomovil.R
 import kronos.cacaomovil.activities.WebView
 
@@ -84,9 +82,9 @@ class ListadoOtro : Fragment(), View.OnClickListener {
          */
         val btnEnlaceAulaVirtual = enlaceAulaVirtual.findViewById<TextView>(R.id.enlaceAulaVirtual)
         btnEnlaceAulaVirtual.setOnClickListener(View.OnClickListener {
-            val i = Intent(Intent.ACTION_VIEW)
+            /*val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse("moodlemobile://" + urlMoodle)
-            startActivity(i)
+            startActivity(i)*/
         })
 
         /**

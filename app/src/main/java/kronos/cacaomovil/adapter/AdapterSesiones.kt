@@ -2,13 +2,13 @@ package kronos.cacaomovil.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import kronos.cacaomovil.R
 import kronos.cacaomovil.activities.Articulos
 import kronos.cacaomovil.models.SesionesM
@@ -46,7 +46,7 @@ class AdapterSesiones(private val mContext: Activity, private val listSesiones: 
         if(position<9){
             holder.txNumero!!.setText("0"+(position+1))
         }else{
-            holder.txNumero!!.setText(position.toString())
+            holder.txNumero!!.setText(""+(position+1))
         }
 
         holder.rlCont!!.setOnClickListener(object : View.OnClickListener {

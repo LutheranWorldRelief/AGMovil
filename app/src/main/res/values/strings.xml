@@ -21,6 +21,7 @@
     <string name="btnAccesoApp">Acceso APP</string>
     <string name="btnAccesoWebView">Acceso WEB</string>
     <string name="textoModalAccesoApp">La primera vez que ingrese al aula virtual debe descargar el app de moodle y crear una cuenta con las opciones disponibles (correo electrónico, Facebook o Google)</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 
 </resources>

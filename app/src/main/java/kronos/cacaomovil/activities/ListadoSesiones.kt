@@ -4,15 +4,16 @@ import android.app.Activity
 import android.graphics.Color
 import android.media.Image
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.android.volley.Request
@@ -109,6 +110,8 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
         var requestQueue = Volley.newRequestQueue(context)
 
+        System.out.println("urlCall $urlCall")
+
         val jsonObjRequestHome = object : StringRequest(
                 Request.Method.GET,
                 urlCall,
@@ -126,8 +129,13 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
                         var itemsG = res.getJSONObject("guide")
                         //for(i in 0..guides.length()-1) {
                             //val itemsG = guides.getJSONObject(i)
+
+                            var archive = "false"
+                            if(itemsG.has("archive")){
+                                archive = itemsG.getString("archive")
+                            }
                             GuiasData.eliminar(itemsG.getString("id"))
-                            GuiasData.insertar(itemsG.getString("id"),itemsG.getString("name"),itemsG.getString("image"),categoria)
+                            GuiasData.insertar(itemsG.getString("id"),itemsG.getString("name"),itemsG.getString("image"),categoria,itemsG.getString("order"),archive)
 
 
                             val sections = itemsG.getJSONArray("sections")

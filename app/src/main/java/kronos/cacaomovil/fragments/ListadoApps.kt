@@ -4,12 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +11,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.android.volley.Request
@@ -25,17 +24,12 @@ import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kronos.cacaomovil.Constants
-
 import kronos.cacaomovil.R
-import kronos.cacaomovil.activities.HomeActivity
 import kronos.cacaomovil.adapter.AdapterAppsList
 import kronos.cacaomovil.adapter.AdapterCategorias
-import kronos.cacaomovil.adapter.SectionedGridRecyclerViewAdapter
 import kronos.cacaomovil.adapter.SimpleAdapter
 import kronos.cacaomovil.database.AppsDB
-import kronos.cacaomovil.database.CategoriasDB
 import kronos.cacaomovil.models.AppsM
-import kronos.cacaomovil.models.BibliotecaM
 import kronos.cacaomovil.models.CategoriasM
 import org.json.JSONArray
 import org.json.JSONObject
