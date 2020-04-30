@@ -14,8 +14,6 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -47,6 +45,17 @@
                     android:textSize="18sp"
                     android:textColor="@android:color/white" />
 
+                <ImageView
+                    android:id="@+id/imagBell"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:padding="7dp"
+                    android:src="@drawable/bell" />
+
 
             </RelativeLayout>
 
@@ -67,10 +76,35 @@
         android:id="@+id/navigation_view"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:background="#f7f7f7"
-        app:menu="@menu/drawer"
         >
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/navigation_drawer_header_include"
+                    layout="@layout/navigation_drawer_header" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/navigation_drawer_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_below="@id/navigation_drawer_header_include"/>
+
+            </RelativeLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
     </com.google.android.material.navigation.NavigationView>

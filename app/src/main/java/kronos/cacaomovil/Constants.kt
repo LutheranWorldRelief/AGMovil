@@ -38,6 +38,7 @@ object Constants {
     val ARTICLES = URL_BASE+"articles/"
     val GUIA_COMPLETA = URL_BASE+"guides/%s/guide"
     val ARCHIVO_GUIA = URL_BASE+"upload_files/"
+    val PRICE = URL_BASE+"apps/cocoa_price"
     val TAG = "cacao"
 
 
