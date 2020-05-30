@@ -89,7 +89,6 @@
     </LinearLayout>
 
 
-
     <TextView
         android:id="@+id/txNotificaciones"
         android:layout_width="match_parent"
@@ -102,6 +101,7 @@
         android:paddingRight="10dp"
         android:text="Notificaciones Nuevas"
         android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="visible" />
 
 </LinearLayout>

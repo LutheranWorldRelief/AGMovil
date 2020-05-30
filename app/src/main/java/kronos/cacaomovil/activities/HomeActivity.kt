@@ -1,12 +1,14 @@
 package kronos.cacaomovil.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,16 +19,20 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import com.paillapp.app.adapter.AdapterNotificacion
 import com.squareup.picasso.Picasso
 import kronos.cacaomovil.Constants
 import kronos.cacaomovil.R
+import kronos.cacaomovil.database.PrecioDB
 import kronos.cacaomovil.fragments.HomeOpciones
 import kronos.cacaomovil.models.NotificacionM
 import org.json.JSONObject
@@ -48,12 +54,19 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     internal var listNotificacion: MutableList<NotificacionM> = ArrayList<NotificacionM>()
     var navigationDrawerList: RecyclerView? = null
     var swipeRefreshLayout: SwipeRefreshLayout? = null
+    var btMas:Button? = null
+    var txNoRed:TextView? = null
+
+
+    lateinit var PrecioData: PrecioDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_main)
 
         context = this@HomeActivity
+
+        PrecioData = PrecioDB(context!!)
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         imagBell = findViewById<View>(R.id.imagBell) as ImageView
@@ -67,15 +80,25 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             actualizarMenuLateral()
         }
 
-        adapterP = AdapterNotificacion(context, listNotificacion)
+        btMas = findViewById<View>(R.id.btMas) as Button
+        txNoRed = findViewById<View>(R.id.txNoRed) as TextView
+        btMas!!.setOnClickListener(this)
 
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
-        listNotificacion.add(NotificacionM("1","Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno"))
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        //Log.w("TAG", "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    var token = task.result?.token.toString()
+                    enviarToken(token)
+                })
+
+
+        adapterP = AdapterNotificacion(context, listNotificacion)
+        listNotificacion.clear()
 
         navigationDrawerList!!.setAdapter(adapterP)
         navigationDrawerList!!.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -173,8 +196,15 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
 
     override fun onClick(v: View) {
-
+        when (v.id) {
+            R.id.btMas ->{
+                val i = Intent(this, ListadoNotificaciones::class.java)
+                startActivity(i)
+                drawerLayout!!.closeDrawer(GravityCompat.END)
+            }
+        }
     }
+
 
     companion object {
         lateinit var navigationView: NavigationView
@@ -187,6 +217,41 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun actualizarMenuLateral(){
+        obtenerPrecioCacao()
+        obtenerNotificaciones()
+    }
+
+    fun enviarToken(token:String){
+        var requestQueue = Volley.newRequestQueue(context)
+
+        val params = JSONObject()
+        params.put("token",token)
+
+        val jsonObjRequestHome = object : StringRequest(
+                Method.POST,
+                Constants.SAVE_TOKEN,
+                Response.Listener { response ->
+                    System.out.println("token $response")
+
+                }, Response.ErrorListener { error ->
+            }) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=UTF-8"
+            }
+
+            @Throws(AuthFailureError::class)
+            override fun getBody(): ByteArray {
+                return params.toString().toByteArray()
+            }
+        }
+
+
+        // Añadir petición a la cola
+        requestQueue!!.add(jsonObjRequestHome)
+    }
+
+
+    fun obtenerPrecioCacao(){
         var requestQueue = Volley.newRequestQueue(context)
 
         val jsonObjRequestHome = object : StringRequest(
@@ -197,39 +262,104 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     swipeRefreshLayout!!.setRefreshing(false)
 
                     var pc = res.getString("pc")
-                    txUno!!.setText(res.getString("cocoa_price"))
-                    txDos!!.setText(pc)
-                    txTres!!.setText("(${res.getString("pcp")})")
+                    var cocoa_price = res.getString("cocoa_price")
+                    var pcp = res.getString("pcp")
+                    colocarDatosPrecio(cocoa_price,pc,pcp)
 
-                    if(pc.startsWith("+")){
-                        txDos!!.setTextColor(Color.parseColor("#01B516"))
-                        txTres!!.setTextColor(Color.parseColor("#01B516"))
-                        img!!.visibility = View.VISIBLE
-
-                        Picasso.get()
-                                .load(R.drawable.arriba)
-                                .into(img)
-                    }else if(pc.startsWith("-")){
-                        txDos!!.setTextColor(Color.parseColor("#ff0000"))
-                        txTres!!.setTextColor(Color.parseColor("#ff0000"))
-                        img!!.visibility = View.VISIBLE
-
-                        Picasso.get()
-                                .load(R.drawable.abajo)
-                                .into(img)
-                    }else{
-                        txDos!!.setTextColor(Color.parseColor("#000000"))
-                        txTres!!.setTextColor(Color.parseColor("#000000"))
-                        img!!.visibility = View.INVISIBLE
-                    }
+                    PrecioData.eliminarTodo()
+                    PrecioData.insertar(cocoa_price = cocoa_price, pcp = pcp, pc = pc)
 
                 }, Response.ErrorListener { error ->
-                    VolleyLog.d(Constants.TAG, "Error: " + error.message)
-                }
+            swipeRefreshLayout!!.setRefreshing(false)
+            val obtenerRegistro = PrecioData.getPrecioCacao()
+            if(obtenerRegistro.count>0){
+                if (obtenerRegistro.moveToFirst())
+                    do {
+                        var pc = obtenerRegistro.getString(obtenerRegistro.getColumnIndex(PrecioDB.pc))
+                        var cocoa_price = obtenerRegistro.getString(obtenerRegistro.getColumnIndex(PrecioDB.cocoa_price))
+                        var pcp = obtenerRegistro.getString(obtenerRegistro.getColumnIndex(PrecioDB.pcp))
+                        colocarDatosPrecio(cocoa_price,pc,pcp)
+                    } while (obtenerRegistro.moveToNext())
+            }
+
+        }
         ) {
         }
 
         // Añadir petición a la cola
         requestQueue!!.add(jsonObjRequestHome)
     }
+
+    private fun colocarDatosPrecio(cocoaPrice: String, pc: String, pcp: String) {
+        txUno!!.setText(cocoaPrice)
+        txDos!!.setText(pc)
+        txTres!!.setText("(${pcp})")
+
+        if(pc.startsWith("+")){
+            txDos!!.setTextColor(Color.parseColor("#01B516"))
+            txTres!!.setTextColor(Color.parseColor("#01B516"))
+            img!!.visibility = View.VISIBLE
+
+            Picasso.get()
+                    .load(R.drawable.arriba)
+                    .into(img)
+        }else if(pc.startsWith("-")){
+            txDos!!.setTextColor(Color.parseColor("#ff0000"))
+            txTres!!.setTextColor(Color.parseColor("#ff0000"))
+            img!!.visibility = View.VISIBLE
+
+            Picasso.get()
+                    .load(R.drawable.abajo)
+                    .into(img)
+        }else{
+            txDos!!.setTextColor(Color.parseColor("#000000"))
+            txTres!!.setTextColor(Color.parseColor("#000000"))
+            img!!.visibility = View.INVISIBLE
+        }
+    }
+
+    fun obtenerNotificaciones(){
+        var requestQueue = Volley.newRequestQueue(context)
+
+        val jsonObjRequestHome = object : StringRequest(
+                Method.GET,
+                Constants.NOTIFICATIONS,
+                Response.Listener { response ->
+                    listNotificacion.clear()
+                    var res = JSONObject(response)
+                    var notifications = res.getJSONArray("notifications")
+                    for (i in 0..(notifications.length() - 1)) {
+                        if(i<3){
+                            val item = notifications.getJSONObject(i)
+                            listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
+                        }
+
+                    }
+
+                    adapterP!!.notifyDataSetChanged()
+
+                    btMas!!.visibility = View.VISIBLE
+                    txNoRed!!.visibility = View.GONE
+                    navigationDrawerList!!.visibility = View.VISIBLE
+
+                }, Response.ErrorListener { error ->
+                    btMas!!.visibility = View.GONE
+                    txNoRed!!.visibility = View.VISIBLE
+                    navigationDrawerList!!.visibility = View.GONE
+
+        }) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=UTF-8"
+            }
+
+            @Throws(AuthFailureError::class)
+            override fun getBody(): ByteArray {
+                return params.toString().toByteArray()
+            }
+        }
+
+        // Añadir petición a la cola
+        requestQueue!!.add(jsonObjRequestHome)
+    }
+
 }

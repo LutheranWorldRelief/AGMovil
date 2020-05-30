@@ -4,14 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import kronos.cacaomovil.R
-import kronos.cacaomovil.fragments.HomeOpciones
-import android.graphics.Color.DKGRAY
 import android.view.Gravity
+import android.view.View
 import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.android.volley.Request
@@ -19,22 +20,18 @@ import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kronos.cacaomovil.Constants
-import kronos.cacaomovil.models.ArticlesM
-import kronos.cacaomovil.models.BibliotecaM
-import kronos.cacaomovil.models.SesionesM
-import org.json.JSONObject
-import java.util.ArrayList
-import android.webkit.WebView
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.articulos.*
+import kronos.cacaomovil.Constants
+import kronos.cacaomovil.R
 import kronos.cacaomovil.database.ArticulosDB
-import kronos.cacaomovil.database.GuiasDB
-import kronos.cacaomovil.models.GuiasM
+import kronos.cacaomovil.materialShowCase.MaterialShowcaseSequence
+import kronos.cacaomovil.materialShowCase.MaterialShowcaseView
+import kronos.cacaomovil.materialShowCase.ViewTarget
+import kronos.cacaomovil.models.ArticlesM
+import org.json.JSONObject
+import java.util.*
 
 
 class Articulos : AppCompatActivity(), View.OnClickListener {
@@ -52,6 +49,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
     lateinit var ArticulosData: ArticulosDB
     var linkShare = ""
     var escala = 0
+    var fabB:FloatingActionButton? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,10 +69,9 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
         ArticulosData = ArticulosDB(context!!)
 
 
-        //var fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener {
+        fabB = findViewById<View>(R.id.fab) as FloatingActionButton
+        fabB!!.setOnClickListener {
             drawerLayout?.openDrawer(Gravity.LEFT)
-            //drawerLayout?.closeDrawer(Gravity.RIGHT)
         }
 
         icons_left.setOnClickListener {
@@ -101,6 +98,8 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
             drawerLayout!!.closeDrawers()
 
             navigationView.menu.getItem(0).subMenu.getItem(0).setChecked(false)
+
+
 
             for(i in 0..listArticles.size-1) {
                 val itemsArticles = listArticles.get(i)
@@ -166,10 +165,24 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
         escala = 0
 
 
+
+
     }
 
 
+    fun show() {
 
+
+        val sequence = MaterialShowcaseSequence(this, "1")
+
+        val oneShowcaseView: MaterialShowcaseView = MaterialShowcaseView.Builder(this).setDismissText("Cerrar")
+                .setTarget(findViewById<View>(R.id.fab), ViewTarget.CentreArea.CENTER).setContentText("Para ver más contenido da click aquí").build()
+
+        sequence.addSequenceItem(oneShowcaseView)
+
+        sequence.start()
+
+    }
 
     public override fun onResume() {
         super.onResume()
@@ -280,6 +293,10 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
 
         navigationView.invalidate()
 
+        if(listArticles.size > 1){
+            fabB!!.show()
+            show()
+        }
     }
 
 

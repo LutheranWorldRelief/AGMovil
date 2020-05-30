@@ -59,9 +59,6 @@ import java.util.ArrayList
 
 
 class ListadoGuias : AppCompatActivity(), View.OnClickListener{
-
-
-
     //Defining Variables
     private var toolbar: Toolbar? = null
     internal var id:String = ""

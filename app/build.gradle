@@ -14,8 +14,8 @@ android {
         applicationId "kronos.cacaomovil"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 27
-        versionName "2.1"
+        versionCode 31
+        versionName "2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -80,4 +80,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.8'
 
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+
 }

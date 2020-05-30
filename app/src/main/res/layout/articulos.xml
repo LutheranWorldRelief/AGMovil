@@ -151,6 +151,7 @@
                 android:layout_marginBottom="44dp"
                 android:backgroundTint="#B2BB1E"
                 android:src="@drawable/next"
+                android:visibility="gone"
                 app:borderWidth="0dp" />
 
 

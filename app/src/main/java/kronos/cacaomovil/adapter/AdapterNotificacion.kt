@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import kronos.cacaomovil.Constants
 import kronos.cacaomovil.R
 import kronos.cacaomovil.models.NotificacionM
 
@@ -43,11 +45,12 @@ class AdapterNotificacion(
         val paletteViewHolder = holder as MyViewHolder
 
 
-        paletteViewHolder.txNotificacion!!.setText(item.nombre)
+        paletteViewHolder.txNotificacion!!.setText(item.title)
 
 
         paletteViewHolder.contNotificacion!!.setOnClickListener(View.OnClickListener {
 
+            Constants.obtenerNotificacionesDetalle(item.id,mContext)
 
         })
 
