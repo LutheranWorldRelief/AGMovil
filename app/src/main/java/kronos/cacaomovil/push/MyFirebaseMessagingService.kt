@@ -15,6 +15,7 @@ import com.google.firebase.messaging.RemoteMessage
 import kronos.cacaomovil.push.MyWorker
 import kronos.cacaomovil.R
 import kronos.cacaomovil.activities.HomeActivity
+import kronos.cacaomovil.activities.ListadoNotificaciones
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -118,7 +119,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String) {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, ListadoNotificaciones::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT)

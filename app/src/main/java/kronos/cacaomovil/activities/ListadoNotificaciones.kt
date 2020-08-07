@@ -1,28 +1,10 @@
 package kronos.cacaomovil.activities
 
-import android.Manifest
 import android.app.*
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.gesture.GestureLibraries.fromFile
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
 import android.os.StrictMode
 import android.view.View
-import android.view.Window
-import android.webkit.MimeTypeMap
-import android.webkit.URLUtil
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -31,30 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.paillapp.app.adapter.AdapterNotificacion
 import kronos.cacaomovil.Constants
 import kronos.cacaomovil.R
-import kronos.cacaomovil.adapter.AdapterBiblioteca
-import kronos.cacaomovil.adapter.AdapterGuias
-import kronos.cacaomovil.adapter.SectionedGridRecyclerViewAdapter
-import kronos.cacaomovil.adapter.SimpleAdapter
-import kronos.cacaomovil.common.DescargarArchivos
-import kronos.cacaomovil.database.ArchivosDB
-import kronos.cacaomovil.database.GuiasDB
-import kronos.cacaomovil.database.SesionesDB
-import kronos.cacaomovil.fragments.HomeOpciones
 import kronos.cacaomovil.models.*
 import org.json.JSONObject
-import pub.devrel.easypermissions.EasyPermissions
-import java.io.File
-import java.io.File.separator
 import java.util.ArrayList
+import org.json.JSONArray as JSONArray1
 
 
 class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
@@ -64,9 +34,12 @@ class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
 
     lateinit var layoutManager: LinearLayoutManager
     lateinit var recyclerNotificaciones: RecyclerView
-    internal var listNotificacion: MutableList<NotificacionM> = ArrayList<NotificacionM>()
     private var adapter: AdapterNotificacion? = null
     internal lateinit var context: Activity
+
+    companion object {
+        internal var listNotificacion: MutableList<NotificacionM> = ArrayList<NotificacionM>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +57,19 @@ class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        //Log.w("TAG", "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    Constants.token = task.result?.token.toString()
+                })
 
         listNotificacion.clear()
-        adapter = AdapterNotificacion(context!!, listNotificacion)
+        adapter = AdapterNotificacion(context!!, listNotificacion,"lista")
         layoutManager = LinearLayoutManager(context)
         recyclerNotificaciones = context!!.findViewById(R.id.recyclerNotificaciones) as RecyclerView
         recyclerNotificaciones.addItemDecoration(DividerItemDecoration(recyclerNotificaciones.getContext(), DividerItemDecoration.VERTICAL));
@@ -95,14 +78,14 @@ class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
         recyclerNotificaciones.itemAnimator = DefaultItemAnimator()
         recyclerNotificaciones.adapter = adapter
 
-        loadGuias()
+        loadNotificacion()
 
 
 
     }
 
 
-    fun loadGuias() {
+    fun loadNotificacion() {
         dialog = ACProgressFlower.Builder(context)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
                 .themeColor(Color.WHITE)
@@ -115,19 +98,25 @@ class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
 
         var requestQueue = Volley.newRequestQueue(context)
 
+
+
         val jsonObjRequestHome = object : StringRequest(
                 Method.GET,
-                Constants.NOTIFICATIONS,
+                Constants.NOTIFICATIONS+"?token="+Constants.token,
                 Response.Listener { response ->
                     listNotificacion.clear()
                     var res = JSONObject(response)
-                    var notifications = res.getJSONArray("notifications")
-                    for (i in 0..(notifications.length() - 1)) {
-                        if(i<10){
-                            val item = notifications.getJSONObject(i)
-                            listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
+                    if(res.has("notifications")){
+                        val jsonNotifications = res["notifications"]
+                        if (jsonNotifications is JSONArray1){
+                            var notifications = res.getJSONArray("notifications")
+                            for (i in 0 until notifications.length()) {
+                                if(i<3){
+                                    val item = notifications.getJSONObject(i)
+                                    listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
+                                }
+                            }
                         }
-
                     }
 
                     adapter!!.notifyDataSetChanged()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,8 +13,10 @@
     android:orientation="vertical">
 
 
+
+
     <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="6dp"
             android:background="?android:attr/selectableItemBackground"
@@ -24,25 +26,38 @@
             app:cardUseCompatPadding="true">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="0dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/close" />
+
+
+
 
 
             <TextView
                 android:id="@+id/txTitle"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:gravity="left"
                 android:lineSpacingExtra="0sp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:layout_marginTop="18dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="Cena navideña"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -50,18 +65,37 @@
 
 
             <TextView
+                android:id="@+id/txFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txTitle"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="40dp"
+                android:fontFamily="@font/robotoregular"
+                android:gravity="left"
+                android:lineSpacingExtra="0sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:text="14-07-2020"
+                android:textColor="#717070"
+                android:textSize="10sp" />
+
+            <TextView
                 android:id="@+id/txDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txFecha"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
+                android:gravity="left"
+                android:lineSpacingExtra="0sp"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="5dp"
                 android:text="Cena navideña"
                 android:textColor="@android:color/black"
-                android:lineSpacingExtra="0sp"
-                android:textSize="14sp"
-                android:gravity="left"
-                android:paddingLeft="5dp" android:paddingRight="5dp"/>
+                android:textSize="14sp" />
 
 
             <ImageView
@@ -70,27 +104,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:maxHeight="350dp"
+                android:layout_below="@+id/txDetalle"
+                android:scaleType="fitCenter"
                 android:src="@drawable/cacao_movil_main"
                 android:visibility="gone" />
 
             <Button
-                    android:text="Cerrar"
-                    android:layout_width="180dp"
-                    android:layout_height="35dp"
-                    android:textColor="@android:color/white"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/rounded_button"
-                    android:textAllCaps="false"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/btAceptar"
-                    android:layout_marginBottom="10dp"/>
+                android:id="@+id/btAceptar"
+                android:layout_width="180dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/imgNotificacion"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button"
+                android:text="Descargar Imagen"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
 
-</LinearLayout>
+
+
+</RelativeLayout>

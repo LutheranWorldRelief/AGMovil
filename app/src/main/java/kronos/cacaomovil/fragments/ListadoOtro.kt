@@ -25,7 +25,7 @@ class ListadoOtro : Fragment(), View.OnClickListener {
     /**
      * URL Moodle
      */
-    private val urlMoodle = "https://developer.brianpalma.com/";
+    private val urlMoodle = "https://aulavirtual.cacaomovil.com/"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,7 +45,7 @@ class ListadoOtro : Fragment(), View.OnClickListener {
     }
 
     fun ShowDialog(){
-        myDialog = Dialog(context)
+        myDialog = Dialog(context!!)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.activity_dialog)
         myDialog.setTitle("Aula virtual")

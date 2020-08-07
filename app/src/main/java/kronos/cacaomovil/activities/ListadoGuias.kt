@@ -91,8 +91,8 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
 
         val extras = intent.extras
         if (extras != null) {
-            id = extras.getString("id")
-            name = extras.getString("name")
+            id = extras.getString("id").toString()
+            name = extras.getString("name").toString()
         }
 
         //System.out.println("id "+id)
@@ -136,7 +136,7 @@ class ListadoGuias : AppCompatActivity(), View.OnClickListener{
 
             val builder: AlertDialog.Builder
             builder = AlertDialog.Builder(context)
-            builder.setTitle("AG Movil")
+            builder.setTitle("Cacao Móvil")
                     .setMessage("¿Desea abrir el archivo?")
                     .setPositiveButton("Si", DialogInterface.OnClickListener { dialog, which ->
 

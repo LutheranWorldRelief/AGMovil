@@ -18,7 +18,7 @@ class WebView : AppCompatActivity() {
     /**
      * URL que va a abrir el webview
      */
-    private val BASE_URL = "https://developer.brianpalma.com/";
+    private val BASE_URL = "https://aulavirtual.cacaomovil.com/"
 
     /**
      * User agent
@@ -36,14 +36,14 @@ class WebView : AppCompatActivity() {
          * Verifico si tiene acceso a Internet y con que red se esta conectando
          */
         if(networkInfo != null && networkInfo.isConnected){
-            if(networkInfo.type == ConnectivityManager.TYPE_WIFI){
+            /*if(networkInfo.type == ConnectivityManager.TYPE_WIFI){
                 Toast.makeText(baseContext, "Connectado vía WIFI", Toast.LENGTH_SHORT).show()
             }
             if(networkInfo.type == ConnectivityManager.TYPE_MOBILE){
                 Toast.makeText(baseContext, "Connectado vía red Móvil", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }else{
-            Toast.makeText(baseContext, "Sin conexión a Internet", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(baseContext, "Sin conexión a Internet", Toast.LENGTH_SHORT).show()
 
             /**
              * Si no tiene acceso a Internet lo envío al HomeActividy

@@ -233,7 +233,7 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
     }
 
     fun ShowDialogB(){
-        var myDialog = Dialog(context)
+        var myDialog = Dialog(context!!)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.activity_biblioteca_dialog)
 

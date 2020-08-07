@@ -3,8 +3,11 @@ package kronos.cacaomovil.activities
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.StrictMode
+import android.text.Html
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -22,7 +25,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
@@ -35,7 +37,9 @@ import kronos.cacaomovil.R
 import kronos.cacaomovil.database.PrecioDB
 import kronos.cacaomovil.fragments.HomeOpciones
 import kronos.cacaomovil.models.NotificacionM
+import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONTokener
 
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
@@ -43,12 +47,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     //Defining Variables
     private var toolbar: Toolbar? = null
     private var imagBell: ImageView? = null
+    private var txNotificacion: TextView? = null
     private var drawerLayout: DrawerLayout? = null
     internal var IDU: String? = null
     internal lateinit var context: Activity
     var img: ImageView? = null
     var txUno: TextView? = null
     var txDos: TextView? = null
+    var txFuente: TextView? = null
     var txTres: TextView? = null
     internal var adapterP: AdapterNotificacion? = null
     internal var listNotificacion: MutableList<NotificacionM> = ArrayList<NotificacionM>()
@@ -66,12 +72,20 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         context = this@HomeActivity
 
+        val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
         PrecioData = PrecioDB(context!!)
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         imagBell = findViewById<View>(R.id.imagBell) as ImageView
+        txNotificacion = findViewById<View>(R.id.txNotificacion) as TextView
         img = findViewById<View>(R.id.img) as ImageView
         txUno = findViewById<View>(R.id.txUno) as TextView
+        txFuente = findViewById<View>(R.id.txFuente) as TextView
+        txFuente!!.setOnClickListener(this)
+        txFuente!!.setText(Html.fromHtml("<u>es.investing.com</u>"))
+
         txDos = findViewById<View>(R.id.txDos) as TextView
         txTres = findViewById<View>(R.id.txTres) as TextView
         navigationDrawerList = findViewById<View>(R.id.navigation_drawer_list) as RecyclerView
@@ -92,12 +106,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     }
 
                     // Get new Instance ID token
-                    var token = task.result?.token.toString()
-                    enviarToken(token)
+                    Constants.token = task.result?.token.toString()
+                    enviarToken(Constants.token)
+                    obtenerNotificaciones()
                 })
 
 
-        adapterP = AdapterNotificacion(context, listNotificacion)
+        adapterP = AdapterNotificacion(context, listNotificacion,"main")
         listNotificacion.clear()
 
         navigationDrawerList!!.setAdapter(adapterP)
@@ -115,40 +130,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             //----------------------------
         }, 2000)
 
-
-        //Initializing NavigationView
-        /*navigationView = findViewById<View>(R.id.navigation_view) as NavigationView
-
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            // This method will trigger on item Click of navigation menu
-            //Checking if the item is in checked state or not, if not make it in checked state
-            if (menuItem.isChecked)
-                menuItem.isChecked = false
-            else
-                menuItem.isChecked = true
-
-            //Closing drawer on item click
-            drawerLayout!!.closeDrawers()
-
-            //Check to see which item was being clicked and perform appropriate action
-            when (menuItem.itemId) {
-
-
-                //Replacing the main content with ContentFragment Which is our Inbox View;
-                R.id.inbox ->
-                    //Toast.makeText(getApplicationContext(),"Inicio",Toast.LENGTH_SHORT).show();
-                    /*HomeNoticias fragment = new HomeNoticias();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame,fragment);
-                        fragmentTransaction.commit();*/
-                    true
-                else -> {
-                    Toast.makeText(applicationContext, "Funcion en proceso", Toast.LENGTH_SHORT).show()
-                    true
-                }
-            }
-        }*/
 
 
         // Initializing Drawer Layout and ActionBarToggle
@@ -202,6 +183,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(i)
                 drawerLayout!!.closeDrawer(GravityCompat.END)
             }
+            R.id.txFuente ->{
+                val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                openURL.data = Uri.parse("https://es.investing.com/commodities/us-cocoa")
+                startActivity(openURL)
+            }
+
         }
     }
 
@@ -319,47 +306,63 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun obtenerNotificaciones(){
-        var requestQueue = Volley.newRequestQueue(context)
+        if(!Constants.token.toString().equals("")){
+            var requestQueue = Volley.newRequestQueue(context)
+            System.out.println(Constants.NOTIFICATIONS+"?token="+Constants.token)
 
-        val jsonObjRequestHome = object : StringRequest(
-                Method.GET,
-                Constants.NOTIFICATIONS,
-                Response.Listener { response ->
-                    listNotificacion.clear()
-                    var res = JSONObject(response)
-                    var notifications = res.getJSONArray("notifications")
-                    for (i in 0..(notifications.length() - 1)) {
-                        if(i<3){
-                            val item = notifications.getJSONObject(i)
-                            listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
+            val jsonObjRequestHome = object : StringRequest(
+                    Method.GET,
+                    Constants.NOTIFICATIONS+"?token="+Constants.token,
+                    Response.Listener { response ->
+                        listNotificacion.clear()
+                        var res = JSONObject(response)
+                        var count = res.getInt("count")
+                        if(count == 0){
+                            txNotificacion!!.visibility = View.GONE
+                        }else{
+                            txNotificacion!!.setText("$count")
+                            txNotificacion!!.visibility = View.VISIBLE
                         }
 
-                    }
+                        if(res.has("notifications")){
+                            val jsonNotifications = res["notifications"]
+                            if (jsonNotifications is JSONArray){
+                                var notifications = res.getJSONArray("notifications")
+                                for (i in 0 until notifications.length()) {
+                                    if(i<3){
+                                        val item = notifications.getJSONObject(i)
+                                        listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
+                                    }
+                                }
+                            }
+                        }
 
-                    adapterP!!.notifyDataSetChanged()
 
-                    btMas!!.visibility = View.VISIBLE
-                    txNoRed!!.visibility = View.GONE
-                    navigationDrawerList!!.visibility = View.VISIBLE
+                        adapterP!!.notifyDataSetChanged()
 
-                }, Response.ErrorListener { error ->
-                    btMas!!.visibility = View.GONE
-                    txNoRed!!.visibility = View.VISIBLE
-                    navigationDrawerList!!.visibility = View.GONE
+                        btMas!!.visibility = View.VISIBLE
+                        txNoRed!!.visibility = View.GONE
+                        navigationDrawerList!!.visibility = View.VISIBLE
 
-        }) {
-            override fun getBodyContentType(): String {
-                return "application/json; charset=UTF-8"
+                    }, Response.ErrorListener { error ->
+                btMas!!.visibility = View.GONE
+                txNoRed!!.visibility = View.VISIBLE
+                navigationDrawerList!!.visibility = View.GONE
+
+            }) {
+                override fun getBodyContentType(): String {
+                    return "application/json; charset=UTF-8"
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    return params.toString().toByteArray()
+                }
             }
 
-            @Throws(AuthFailureError::class)
-            override fun getBody(): ByteArray {
-                return params.toString().toByteArray()
-            }
+            // Añadir petición a la cola
+            requestQueue!!.add(jsonObjRequestHome)
         }
-
-        // Añadir petición a la cola
-        requestQueue!!.add(jsonObjRequestHome)
     }
 
 }

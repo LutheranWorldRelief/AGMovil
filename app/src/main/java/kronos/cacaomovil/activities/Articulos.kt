@@ -60,7 +60,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
 
         val extras = intent.extras
         if (extras != null) {
-            id = extras.getString("id")
+            id = extras.getString("id").toString()
         }
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -205,7 +205,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
 
         var requestQueue = Volley.newRequestQueue(context)
 
-        //System.out.println(Constants.ARTICLES+id)
+        System.out.println(Constants.ARTICLES+id)
         val jsonObjRequestHome = object : StringRequest(
                 Request.Method.GET,
                 Constants.ARTICLES+id,

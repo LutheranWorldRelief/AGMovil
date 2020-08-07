@@ -66,10 +66,10 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
         val extras = intent.extras
         if (extras != null) {
-            id = extras.getString("id")
-            name = extras.getString("name")
-            image = extras.getString("image")
-            categoria = extras.getString("categoria")
+            id = extras.getString("id").toString()
+            name = extras.getString("name").toString()
+            image = extras.getString("image").toString()
+            categoria = extras.getString("categoria").toString()
         }
 
         SesionesData = SesionesDB(context!!)
@@ -187,7 +187,7 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
         var requestQueue = Volley.newRequestQueue(context)
 
-        //System.out.println("Constants "+Constants.SECTIONS+id)
+        System.out.println("Constants "+Constants.SECTIONS+id)
 
         val jsonObjRequestHome = object : StringRequest(
                 Request.Method.GET,
@@ -219,7 +219,6 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
 
         Picasso.get()
                 .load(image)
-                .resize(300, 160)
                 .into(portada)
 
         if(!response.toString().equals("")){
@@ -246,6 +245,8 @@ class ListadoSesiones : AppCompatActivity(), View.OnClickListener {
                 } while (cSesiones.moveToNext())
         }
 
+
+        //listSesiones.sortedBy { myObject -> myObject.orden }
 
         adapter!!.notifyDataSetChanged()
     }

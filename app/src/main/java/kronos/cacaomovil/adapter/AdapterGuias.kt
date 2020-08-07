@@ -208,7 +208,7 @@ class AdapterGuias(private val mContext: Activity, private val listDishes: List<
                 }else{
                     val builder: AlertDialog.Builder
                     builder = AlertDialog.Builder(mContext)
-                    builder.setTitle("AG Movil")
+                    builder.setTitle("Cacao Móvil")
                             .setMessage(mensaje)
                             .setPositiveButton("Si", DialogInterface.OnClickListener { dialog, which ->
                                 val dialog = ProgressDialog.show(mContext, "","Cargando. Por favor espera...", true)
