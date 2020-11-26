@@ -12,10 +12,9 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import kronos.cacaomovil.push.MyWorker
 import kronos.cacaomovil.R
-import kronos.cacaomovil.activities.HomeActivity
 import kronos.cacaomovil.activities.ListadoNotificaciones
+import kronos.cacaomovil.push.MyWorker
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -120,6 +119,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     private fun sendNotification(messageBody: String) {
         val intent = Intent(this, ListadoNotificaciones::class.java)
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT)

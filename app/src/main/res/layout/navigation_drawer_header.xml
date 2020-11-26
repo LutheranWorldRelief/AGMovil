@@ -26,7 +26,7 @@
             android:paddingRight="10dp"
             android:text="Precio internacional del cacao"
             android:textColor="@android:color/black"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/rLContOnlySingle"
@@ -92,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="14dp"
-            android:gravity="center"
+            android:gravity="right"
+            android:paddingRight="0dp"
             android:orientation="horizontal">
 
 
@@ -105,7 +106,7 @@
                 android:gravity="center"
                 android:text="Fuente: "
                 android:textColor="#303030"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txFuente"
@@ -119,7 +120,7 @@
                 android:text=""
                 android:textColor="#01B516"
                 android:textColorLink="#028F12"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

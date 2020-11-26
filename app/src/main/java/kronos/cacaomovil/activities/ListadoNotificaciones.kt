@@ -111,10 +111,8 @@ class ListadoNotificaciones : AppCompatActivity(), View.OnClickListener{
                         if (jsonNotifications is JSONArray1){
                             var notifications = res.getJSONArray("notifications")
                             for (i in 0 until notifications.length()) {
-                                if(i<3){
-                                    val item = notifications.getJSONObject(i)
-                                    listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
-                                }
+                                val item = notifications.getJSONObject(i)
+                                listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
                             }
                         }
                     }

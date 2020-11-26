@@ -157,6 +157,9 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
         mWebView!!.getSettings().setBuiltInZoomControls(true);
         mWebView!!.getSettings().setSupportZoom(true);
 
+        val settings = mWebView!!.settings
+        settings.defaultTextEncodingName = "utf-8"
+
         loadArticulos()
         contShare.setOnClickListener(this)
         //share.setColorFilter(Color.parseColor("#B2BB1E"), android.graphics.PorterDuff.Mode.MULTIPLY)
@@ -205,7 +208,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
 
         var requestQueue = Volley.newRequestQueue(context)
 
-        System.out.println(Constants.ARTICLES+id)
+        //System.out.println(Constants.ARTICLES+id)
         val jsonObjRequestHome = object : StringRequest(
                 Request.Method.GET,
                 Constants.ARTICLES+id,
@@ -234,6 +237,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
         val menu = navigationView.menu
         val submenu = menu.addSubMenu("Artículo de la temática")
 
+
         if(!response.toString().equals("")){
             val res = JSONObject(response)
             var articles = res.getJSONArray("articles")
@@ -259,6 +263,8 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
                 if(itemsArticles.has("link")){
                     link = itemsArticles.getString("link")
                 }
+
+
                 listArticles.add(ArticlesM(itemsArticles.getString("id"), itemsArticles.getString("name"), itemsArticles.getString("title"),itemsArticles.getString("description"), itemsArticles.getString("content"),link))
 
 
@@ -323,6 +329,7 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
     }
 
     fun loadWeb(contenido:String){
+
         val textoWeb = "<html>\n" +
                 "<head>\n" +
                 "<style type=\"text/css\">\n" +
@@ -339,7 +346,8 @@ class Articulos : AppCompatActivity(), View.OnClickListener {
                 contenido +
                 "<br/><br/><br/></body>" +
                 "</html>"
+        mWebView!!.loadDataWithBaseURL(" https://admin.cacaomovil.com", textoWeb, "text/html", "UTF-8", null)
 
-        mWebView!!.loadData(textoWeb, "text/html", "UTF-8")
+        //mWebView!!.loadData(textoWeb, "text/html; charset=utf-8", "UTF-8")
     }
 }

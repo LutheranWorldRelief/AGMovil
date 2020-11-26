@@ -329,7 +329,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                             if (jsonNotifications is JSONArray){
                                 var notifications = res.getJSONArray("notifications")
                                 for (i in 0 until notifications.length()) {
-                                    if(i<3){
+                                    if(i<5){
                                         val item = notifications.getJSONObject(i)
                                         listNotificacion.add(NotificacionM(item.getString("id"),item.getString("title"),item.getString("message")))
                                     }

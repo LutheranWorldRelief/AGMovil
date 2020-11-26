@@ -25,8 +25,16 @@ class Splash : AppCompatActivity() {
         txVersion.setText("Versión $versionName")
 
 
+        var selectStation = Intent(this@Splash, HomeActivity::class.java)
+
+        val extras = intent.extras
+        if (extras != null) {
+            if(intent.hasExtra("key_1")) {
+                selectStation = Intent(this@Splash, ListadoNotificaciones::class.java)
+            }
+        }
+
         Handler().postDelayed(Runnable {
-            val selectStation = Intent(this@Splash, HomeActivity::class.java)
             startActivity(selectStation)
 
             finish()

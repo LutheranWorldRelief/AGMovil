@@ -238,8 +238,7 @@ class ListadoBiblioteca : Fragment(), View.OnClickListener {
         myDialog.setContentView(R.layout.activity_biblioteca_dialog)
 
         var textView = myDialog.findViewById<View>(R.id.textView) as TextView
-        textView.text = "Puedes tener acceso al contenido que ya hayas leido de la biblioteca, incluso cuando no tengas conexión a internet. Para acceder a nuevo contenido, recuerda conectarte a internet"
-
+        textView.text = "Para tener acceso al contenido de la biblioteca que te interesa leer cuando no tengas conexión a internet, debes abrir todos los temas que deseas guardar. Cuando recuperes conexión, podrás volver a ver todo el contenido."
         var check = myDialog.findViewById<View>(R.id.checkBox) as CheckBox
 
         var abrirMoodleDialog= myDialog.findViewById<View>(R.id.abrirMoodleDialog) as Button
